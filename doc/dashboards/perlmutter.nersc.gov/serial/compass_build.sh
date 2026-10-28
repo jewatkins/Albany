@@ -6,6 +6,10 @@ cd ${BASE_DIR}/repos/compass
 
 # compass now deploys with ./deploy.py (pixi + mache.deploy); pixi must be on
 # PATH or at ~/.pixi/bin/pixi
+# pixi/rattler lock their cache; /global/homes does not support those locks
+# from scron (os error 524), so keep the cache on pscratch
+export PIXI_CACHE_DIR=${BASE_DIR}/pixi_cache
+export RATTLER_CACHE_DIR=${PIXI_CACHE_DIR}
 git submodule update --init jigsaw-python
 ./deploy.py --machine pm-cpu --compiler gnu --mpi mpich --no-spack --pixi-path ${BASE_DIR}/build/compass --recreate 2>&1 | tee deploy_compass_output.txt
 LOAD_SCRIPT=`ls -t ${BASE_DIR}/repos/compass/load_compass_pm-cpu*.sh 2>/dev/null | head -1`

@@ -232,11 +232,11 @@ if (BUILD_ALBANY_DEBUG)
   set (CTEST_TEST_TIMEOUT 3600)
 
   # Run tests concurrently: a blake node has 96 cores and each Albany test uses
-  # at most 4 MPI ranks (Trilinos_MPI_EXEC_MAX_NUMPROCS), so 24 tests at a time
-  # fills the node. The tests are launched with '--bind-to none' (see
-  # do-cmake-albany-gcc-debug) so concurrent mpiruns do not all pin to the
+  # at most 4 MPI ranks (Trilinos_MPI_EXEC_MAX_NUMPROCS), so 12 tests at a time
+  # uses at most half the node. The tests are launched with '--bind-to none'
+  # (see do-cmake-albany-gcc-debug) so concurrent mpiruns do not all pin to the
   # same cores.
-  set (CTEST_PARALLEL_LEVEL 24)
+  set (CTEST_PARALLEL_LEVEL 12)
 
   CTEST_TEST(
     BUILD "${CTEST_BINARY_DIRECTORY}/AlbBuildDebugGccNoWarn"

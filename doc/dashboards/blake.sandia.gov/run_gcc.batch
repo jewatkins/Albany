@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 ##SBATCH -p c60-m0 
-#SBATCH --time=8:00:00
+#SBATCH --time=12:00:00
 #Note: This script assumes you have pre-loaded the required modules
 #prior to entering the sbatch command. The env will propagate to the
 #batch job.
@@ -18,10 +18,14 @@ bash nightly_cron_script_trilinos_blake_gcc_release.sh
 bash nightly_cron_script_trilinos_blake_gcc_debug.sh
 cd /home/projects/albany/nightlyCDashAlbanyBlake
 bash nightly_cron_script_albany_blake_gcc_release.sh
-bash nightly_cron_script_albany_blake_gcc_debug.sh
+# The SFad builds and MALI are used by the ALI perf tests (cronjob, 03:00), so
+# build them before the debug build: the debug test suite alone takes ~7 hours
+# and would otherwise push these builds past the perf test start time and the
+# job time limit, leaving partially built executables behind.
 bash nightly_cron_script_albany_blake_gcc_sfad.sh sfad6
 bash nightly_cron_script_albany_blake_gcc_sfad.sh sfad12
 bash nightly_cron_script_albany_blake_gcc_sfad.sh sfad16
 bash nightly_cron_script_albany_blake_gcc_sfad.sh sfad24
 bash nightly_cron_script_mali_blake_gcc_release.sh
+bash nightly_cron_script_albany_blake_gcc_debug.sh
 

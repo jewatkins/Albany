@@ -229,10 +229,18 @@ if (BUILD_ALBANY_DEBUG)
   set(CTEST_CUSTOM_MAXIMUM_PASSED_TEST_OUTPUT_SIZE 5000000)
   set(CTEST_CUSTOM_MAXIMUM_FAILED_TEST_OUTPUT_SIZE 5000000)
 
-  set (CTEST_TEST_TIMEOUT 2400)
+  set (CTEST_TEST_TIMEOUT 3600)
+
+  # Run tests concurrently: a blake node has 96 cores and each Albany test uses
+  # at most 4 MPI ranks (Trilinos_MPI_EXEC_MAX_NUMPROCS), so 24 tests at a time
+  # fills the node. The tests are launched with '--bind-to none' (see
+  # do-cmake-albany-gcc-debug) so concurrent mpiruns do not all pin to the
+  # same cores.
+  set (CTEST_PARALLEL_LEVEL 24)
 
   CTEST_TEST(
     BUILD "${CTEST_BINARY_DIRECTORY}/AlbBuildDebugGccNoWarn"
+    PARALLEL_LEVEL ${CTEST_PARALLEL_LEVEL}
     RETURN_VALUE  HAD_ERROR
     )
 

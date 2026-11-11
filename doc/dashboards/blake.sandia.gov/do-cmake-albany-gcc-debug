@@ -11,9 +11,9 @@ cmake \
     -D CMAKE_CXX_FLAGS:STRING='-Werror=parentheses -Werror=sign-compare -Werror=unused-variable' \
     -D ENABLE_LANDICE:BOOL=ON \
     -D ENABLE_DEMO_PDES:BOOL=ON \
-    -D ALBANY_CTEST_TIMEOUT=2400 \
+    -D ALBANY_CTEST_TIMEOUT=3600 \
     -D ENABLE_CHECK_FPE:BOOL=OFF \
-    -D ALBANY_MPI_EXEC_TRAILING_OPTIONS='--map-by core' \
+    -D ALBANY_MPI_EXEC_TRAILING_OPTIONS='--map-by core --bind-to none' \
     -D ENABLE_OMEGAH:BOOL=ON \
     -D ENABLE_MESHFIELDS:BOOL=ON \
     -D ENABLE_ALBANY_PYTHON:BOOL=ON \
